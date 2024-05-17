@@ -1,7 +1,33 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/button";
+import { useState } from "react";
+import axiosInstance from "../../config/axios_config";
 
 const SignUp = () => {
+  const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axiosInstance.post("/account/register", {
+        username,
+        email,
+        password,
+        confirm_password: confirmPassword,
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <main className="h-screen w-screen overflow-hidden flex items-center bg-gray-100">
@@ -19,18 +45,23 @@ const SignUp = () => {
             </Link>
           </div>
 
-          <form className="flex flex-col space-y-3 mt-5">
+          <form
+            onSubmit={registerUser}
+            className="flex flex-col space-y-3 mt-5"
+          >
             <div>
               <label
                 htmlFor="name"
                 className="text-gray-900 text-sm font-poppins"
               >
-                Full Name
+                Username
               </label>
 
               <input
                 type="text"
                 id="name"
+                required
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
               />
             </div>
@@ -46,6 +77,8 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
               />
             </div>
@@ -61,6 +94,25 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="text-gray-900 text-sm font-poppins"
+              >
+                Confirm Password
+              </label>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                required
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
               />
             </div>
