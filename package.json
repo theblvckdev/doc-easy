@@ -1,5 +1,5 @@
 {
-  "name": "nigerian-foods",
+  "name": "doc-easy",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.0",
     "react-router-dom": "^6.23.0",
+    "react-toastify": "^10.0.5",
     "sass": "^1.76.0"
   },
   "devDependencies": {

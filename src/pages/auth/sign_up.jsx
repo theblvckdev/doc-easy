@@ -1,35 +1,67 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button";
 import { useState } from "react";
-import axiosInstance from "../../config/axios_config";
+import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigator = useNavigate();
 
   const registerUser = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const response = await axiosInstance.post("/account/register", {
-        username,
-        email,
-        password,
-        confirm_password: confirmPassword,
-      });
-      console.log(response);
+      const response = await axios.post(
+        "https://supremepraiz.pythonanywhere.com/account/register/",
+        {
+          username,
+          email,
+          password,
+          confirm_password: confirmPassword,
+        }
+      );
+
+      toast.success(
+        "Your account has been created successfully! Redirecting ..."
+      );
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setLoading(false);
+
+      setTimeout(() => {
+        navigator("/");
+      }, 2000);
     } catch (err) {
-      console.error(err);
+      // console.error(err.response.data);
+      toast.error(JSON.stringify(err.response.data));
+      setLoading(false);
     }
   };
 
   return (
     <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        theme="light"
+      />
+      <ToastContainer />
       <main className="h-screen w-screen overflow-hidden flex items-center bg-gray-100">
         <div className="bg-white p-10 rounded-lg shadow max-w-md w-full mx-auto">
           <h1 className="text-center text-indigo-600 text-4xl font-bold font-poppins">
@@ -118,7 +150,11 @@ const SignUp = () => {
             </div>
 
             <div>
-              <Button text="Create account" width={"w-full"} />
+              <Button
+                text="Create account"
+                loading={loading}
+                width={"w-full"}
+              />
             </div>
           </form>
         </div>

@@ -5,7 +5,7 @@ const Logo = () => {
     <>
       <Link to={"/"} className="no-underline outline-none">
         <h3 className="text-indigo-600 font-bold text-2xl font-poppins">
-          Nigerian foods
+          docEasy
         </h3>
       </Link>
     </>
