@@ -3,10 +3,11 @@ import Button from "./button";
 import Logo from "./logo";
 import AddFileModal from "./add_file_modal";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const userData = JSON.parse(localStorage.getItem("user")) || null;
   return (
     <>
       {showModal && (
@@ -22,22 +23,33 @@ const Navbar = () => {
               <Logo />
             </div>
 
-            <div className="flex items-center gap-5 md:mt-0 mt-2">
-              <Button onClick={() => setShowModal(true)} text="Upload doc." />
+            {userData !== null ? (
+              <div className="flex items-center gap-5 md:mt-0 mt-2">
+                <Button onClick={() => setShowModal(true)} text="Upload doc." />
 
-              <div className="flex items-center gap-2">
-                <div className="h-[45px] w-[45px] rounded-full ring-1 ring-gray-400 bg-gray-100 flex items-center justify-center">
-                  <IoPersonOutline />
-                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-[45px] w-[45px] rounded-full ring-1 ring-gray-400 bg-gray-100 flex items-center justify-center">
+                    <IoPersonOutline />
+                  </div>
 
-                <div>
-                  <h1 className="text-gray-900 leading-3 font-semibold font-poppins">
-                    Jude Adeyemi
-                  </h1>
-                  <small className="text-gray-400">jude@gmail.com</small>
+                  <div>
+                    <h1 className="text-gray-900 leading-3 font-semibold font-poppins">
+                      {userData.username}
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex flex-row gap-2 items-center">
+                <Link to={"/login"} className="outline-none no-underline">
+                  <Button text="Login" />
+                </Link>
+
+                <Link to={"/sign-up"} className="outline-none no-underline">
+                  <Button text="Sign up" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>
