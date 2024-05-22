@@ -1,9 +1,5 @@
 // import BlurBackdrop from "../../components/blur_backdrop_effect";
-import {
-  IoDownloadOutline,
-  IoExitOutline,
-  IoFolderOutline,
-} from "react-icons/io5";
+import { IoDownloadOutline, IoFolderOutline } from "react-icons/io5";
 import Navbar from "../../components/navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
