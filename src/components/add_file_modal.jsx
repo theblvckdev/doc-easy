@@ -2,8 +2,21 @@ import { IoCloseOutline } from "react-icons/io5";
 import Button from "./button";
 // import { useState } from "react";
 import propTypes from "prop-types";
+import { useState } from "react";
 
 const AddFileModal = ({ showModal, onClick }) => {
+  const [loading, setLoading] = useState(false);
+
+  const uploadFile = async () => {
+    setLoading(true);
+    try {
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div
@@ -25,7 +38,7 @@ const AddFileModal = ({ showModal, onClick }) => {
           </h1>
 
           <div className="mt-5">
-            <form className="flex flex-col gap-y-3">
+            <form onSubmit={uploadFile} className="flex flex-col gap-y-3">
               <div>
                 <label
                   htmlFor="filename"
@@ -37,6 +50,7 @@ const AddFileModal = ({ showModal, onClick }) => {
                 <input
                   type="text"
                   id="filename"
+                  required
                   className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
                 />
               </div>
@@ -52,12 +66,17 @@ const AddFileModal = ({ showModal, onClick }) => {
                 <input
                   type="file"
                   id="filename"
+                  required
                   className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
                 />
               </div>
 
               <div className="mt-2">
-                <Button text="Upload document" width={"w-full"} />
+                <Button
+                  loading={loading}
+                  text="Upload document"
+                  width={"w-full"}
+                />
               </div>
             </form>
           </div>
