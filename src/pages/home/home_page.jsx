@@ -55,6 +55,10 @@ export default function Homepage() {
               <h1 className="text-center text-gray-500 font-semibold font-poppins">
                 Loading ...
               </h1>
+            ) : documents.length === 0 ? (
+              <h1 className="text-center font-poppins text-gray-400 font-bold text-2xl">
+                No documents found
+              </h1>
             ) : (
               <div className="flex md:flex-row flex-col flex-wrap gap-5">
                 {documents.map((data, index) => {
