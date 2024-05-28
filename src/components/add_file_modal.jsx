@@ -3,13 +3,18 @@ import Button from "./button";
 // import { useState } from "react";
 import propTypes from "prop-types";
 import { useState } from "react";
+import axios from "axios";
 
 const AddFileModal = ({ showModal, onClick }) => {
   const [loading, setLoading] = useState(false);
+  const [filename, setFilename] = useState("");
+  const [file, setFile] = useState(null);
 
-  const uploadFile = async () => {
+  const uploadFile = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
+      await console.log(file[0], filename);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -51,13 +56,14 @@ const AddFileModal = ({ showModal, onClick }) => {
                   type="text"
                   id="filename"
                   required
+                  onChange={(e) => setFilename(e.target.value)}
                   className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
                 />
               </div>
 
               <div>
                 <label
-                  htmlFor="filename"
+                  htmlFor="fileURL"
                   className="text-gray-900 text-sm font-poppins"
                 >
                   Document URL
@@ -65,8 +71,9 @@ const AddFileModal = ({ showModal, onClick }) => {
 
                 <input
                   type="file"
-                  id="filename"
+                  id="fileURL"
                   required
+                  onChange={(e) => setFile(e.target.files)}
                   className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
                 />
               </div>

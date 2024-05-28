@@ -56,7 +56,7 @@ export default function Homepage() {
                 Loading ...
               </h1>
             ) : documents.length === 0 ? (
-              <h1 className="text-center font-poppins text-gray-400 font-bold text-2xl">
+              <h1 className="text-center font-poppins text-gray-400 font-semibold text-2xl">
                 No documents found
               </h1>
             ) : (
