@@ -37,6 +37,33 @@ export default function Homepage() {
     getDocs();
   }, []);
 
+  const downloadFile = async () => {
+    try {
+      const response = axios.get(
+        "http://supremepraiz.pythonanywhere.com/niger/document/1/surveyor/",
+        {
+          responseType: "blob",
+        }
+      );
+
+      const blob = new Blob([response.data.results], {
+        type: response.data.results.file,
+      });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${response.data.results.file_name}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(URL);
+    } catch (err) {
+      console.error("Error downloading the file", err);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -92,7 +119,10 @@ export default function Homepage() {
                             download={`${file_name}.zip`}
                             className="outline-none"
                           >
-                            <button className="border-l-2 px-2 ml-auto outline-none">
+                            <button
+                              onClick={downloadFile}
+                              className="border-l-2 px-2 ml-auto outline-none"
+                            >
                               <IoDownloadOutline className="text-4xl text-green-500" />
                             </button>
                           </a>
