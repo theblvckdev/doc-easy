@@ -24,7 +24,7 @@ const Navbar = () => {
             </div>
 
             {userData !== null ? (
-              <div className="flex items-center gap-5 md:mt-0 mt-2">
+              <div className="flex md:flex-row flex-col-reverse md:items-center md:gap-5 gap-2 md:mt-0 mt-2">
                 <Button onClick={() => setShowModal(true)} text="Upload doc." />
 
                 <div className="flex items-center gap-2">
