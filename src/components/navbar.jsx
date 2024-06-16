@@ -36,6 +36,9 @@ const Navbar = () => {
                     <h1 className="text-gray-900 leading-3 font-semibold font-poppins">
                       {userData.username}
                     </h1>
+                    <div className="text-sm text-gray-400 font-poppins">
+                      {userData.email}
+                    </div>
                   </div>
                 </div>
               </div>

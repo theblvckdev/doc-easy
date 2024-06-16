@@ -16,7 +16,7 @@ export default function Homepage() {
 
       try {
         const response = await axios.get(
-          "http://supremepraiz.pythonanywhere.com/niger/document/1/surveyor/",
+          "https://supremepraiz.pythonanywhere.com/niger/document/surveyor/",
           {
             headers: {
               Authorization: `Bearer ${token.access}`,

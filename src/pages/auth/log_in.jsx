@@ -27,14 +27,9 @@ const Login = () => {
 
       setLoading(false);
       toast.success("Login successfull! Redirecting ...");
+      console.log(response);
 
-      const compiledUserData = {
-        username: username,
-        access: response.data.access,
-        refresh: response.data.refresh,
-      };
-
-      localStorage.setItem("user", JSON.stringify(compiledUserData));
+      localStorage.setItem("user", JSON.stringify(response.data));
 
       setTimeout(() => {
         navigator("/");

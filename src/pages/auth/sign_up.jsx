@@ -23,7 +23,7 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://supremepraiz.pythonanywhere.com/account/register/",
         {
           username,
@@ -36,11 +36,10 @@ const SignUp = () => {
       toast.success(
         "Your account has been created successfully! Redirecting ..."
       );
-      localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
 
       setTimeout(() => {
-        navigator("/");
+        navigator("/login");
       }, 2000);
     } catch (err) {
       // console.error(err.response.data);

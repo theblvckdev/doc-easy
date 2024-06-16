@@ -8,13 +8,38 @@ import axios from "axios";
 const AddFileModal = ({ showModal, onClick }) => {
   const [loading, setLoading] = useState(false);
   const [filename, setFilename] = useState("");
+  const [location, setLocation] = useState("");
   const [file, setFile] = useState(null);
+
+  const userData = JSON.parse(localStorage.getItem("user")) || null;
 
   const uploadFile = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await console.log(file[0], filename);
+      const formData = new FormData();
+      formData.append("file_name", filename);
+      formData.append("location", location);
+      formData.append("file", file[0]);
+
+      const response = await axios.post(
+        "http://supremepraiz.pythonanywhere.com/niger/document/surveyor/",
+        {
+          user: userData.user_id,
+          file_name: filename,
+          file: formData,
+          location,
+          created: Date.now(),
+          // surveyor: userData.user_id,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userData.access}`,
+          },
+        }
+      );
+      console.log(response);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -57,6 +82,23 @@ const AddFileModal = ({ showModal, onClick }) => {
                   id="filename"
                   required
                   onChange={(e) => setFilename(e.target.value)}
+                  className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="location"
+                  className="text-gray-900 text-sm font-poppins"
+                >
+                  Location
+                </label>
+
+                <input
+                  type="text"
+                  id="location"
+                  required
+                  onChange={(e) => setLocation(e.target.value)}
                   className="w-full box-border p-1.5 rounded-md ring-1 ring-gray-200 outline-none text-gray-900 duration-300 ease-in font-poppins focus:ring-indigo-600"
                 />
               </div>
